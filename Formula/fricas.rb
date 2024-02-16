@@ -14,12 +14,18 @@ class Fricas < Formula
   depends_on "libxpm"
   depends_on "libxt"
   depends_on "hsbcl"
+  depends_on "gmp"
 
   def install
+    args = %W[
+    --with-lisp=#{Formula["hsbcl"].bin},
+    --enable-gmp
+    ]
+
     Dir.mkdir("build")
     chdir "build" do
       ENV.deparallelize
-      system "../configure", *std_configure_args
+      system "../configure", *std_configure_args, *args
       system "make"
       system "make", "install"
     end
