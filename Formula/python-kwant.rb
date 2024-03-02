@@ -41,10 +41,8 @@ class PythonKwant < Formula
 
   test do
     system python3, "-c", <<~EOS
-      import numpy as np
-      t = np.ones((3,3), int)
-      assert t.sum() == 9
-      assert np.dot(t, t).sum() == 27
+      import kwant
+      assert kwant.digest.TWOPI == 6.283185307179586
     EOS
   end
 end

@@ -22,12 +22,16 @@ class Fricas < Formula
       "--enable-gmp"
     ]
 
-    Dir.mkdir("build")
-    chdir "build" do
+    mkdir "build" do
       ENV.deparallelize
       system "../configure", *std_configure_args, *args
       system "make"
       system "make", "install"
     end
+  end
+
+  test do
+    assert_match %r{ \(/ \(pi\) 2\)\n},
+      pipe_output(bin/"fricas -nosman", "integrate(sqrt(1-x^2),x=-1..1)::InputForm")
   end
 end
