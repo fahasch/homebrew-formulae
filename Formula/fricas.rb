@@ -6,6 +6,8 @@ class Fricas < Formula
   license "BSD-3-Clause"
   head "https://github.com/fricas/fricas.git", branch: "master"
 
+  depends_on "gmp" => :build
+  depends_on "hsbcl" => :build
   depends_on "libice"
   depends_on "libsm"
   depends_on "libx11"
@@ -13,13 +15,11 @@ class Fricas < Formula
   depends_on "libxdmcp"
   depends_on "libxpm"
   depends_on "libxt"
-  depends_on "gmp"
-  depends_on "hsbcl" => :build
 
   def install
-    args = %W[
-    --with-lisp=#{Formula["hsbcl"].bin},
-    --enable-gmp
+    args = [
+      "--with-lisp=#{Formula["hsbcl"].bin}/hsbcl",
+      "--enable-gmp"
     ]
 
     Dir.mkdir("build")

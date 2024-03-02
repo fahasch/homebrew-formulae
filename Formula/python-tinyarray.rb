@@ -2,7 +2,7 @@ class PythonTinyarray < Formula
   desc "Arrays of numbers for Python, optimized for small sizes"
   homepage "https://pypi.org/project/tinyarray/"
   url "https://downloads.kwant-project.org/tinyarray/tinyarray-1.2.4.tar.gz"
-  sha256 "3219d2512fcee55fa225328360574897e9f6049cfbae921bda0640a3a79dbd9f"
+  sha256 "ecd3428fd8a48b61fc5f0a413ede03e27db3a1dd53fcd49e24a36d11a8a29aba"
   license "BSD-2-Clause"
 
   depends_on "gcc" => :build # for gfortran
