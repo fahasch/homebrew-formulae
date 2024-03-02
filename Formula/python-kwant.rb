@@ -7,14 +7,15 @@ class PythonKwant < Formula
 
   depends_on "gcc" => :build # for gfortran
   depends_on "libcython" => :build
-  depends_on "python@3.12"
-  depends_on "openblas"
-  depends_on "numpy"
-  depends_on "scipy"
+  depends_on "python-setuptools" => :build
   depends_on "metis"
-  depends_on "scotch"
   depends_on "mumps"
+  depends_on "numpy"
+  depends_on "openblas"
   depends_on "python-tinyarray"
+  depends_on "python@3.12"
+  depends_on "scipy"
+  depends_on "scotch"
 
   def python3
     which("python3.12")
@@ -34,7 +35,7 @@ class PythonKwant < Formula
       library_dirs = #{Formula["gcc"].lib}/gcc/current
     EOS
 
-    system python3, "setup.py", "build", "--cython"  # recythonize
+    system python3, "setup.py", "build", "--cython" # recythonize
     system python3, "-m", "pip", "install", *std_pip_args, "."
   end
 
