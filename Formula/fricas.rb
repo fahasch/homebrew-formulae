@@ -13,8 +13,8 @@ class Fricas < Formula
   depends_on "libxdmcp"
   depends_on "libxpm"
   depends_on "libxt"
-  depends_on "hsbcl"
   depends_on "gmp"
+  depends_on "hsbcl" => :build
 
   def install
     args = %W[
