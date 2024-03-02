@@ -31,8 +31,7 @@ class PythonKwant < Formula
 
       [mumps]
       libraries = zmumps mumps_common pord metis esmumps scotch scotcherr mpiseq gfortran gomp
-      include_dirs = #{Formula["mumps"].include}
-      library_dirs = /usr/local/opt/mumps/lib /usr/local/opt/metis/lib /usr/local/opt/scotch/lib /usr/local/opt/gcc/lib/gcc/current
+      library_dirs = #{Formula["gcc"].lib}/gcc/current
     EOS
 
     system python3, "setup.py", "build", "--cython"  # recythonize
