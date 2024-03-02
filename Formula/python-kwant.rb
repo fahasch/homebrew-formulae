@@ -15,6 +15,7 @@ class PythonKwant < Formula
   depends_on "scotch"
   depends_on "mumps"
   depends_on "python-tinyarray"
+  depends_on "python-setuptools" => :build
 
   def python3
     which("python3.12")
