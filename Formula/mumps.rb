@@ -36,6 +36,8 @@ class Mumps < Formula
     lib.install Dir["libseq/libmpiseq#{shared_library("*")}"]
     # Install headers
     libexec.install "include"
+    rm "libseq/mpi.h"
+    rm "libseq/mpif.h"
     (libexec/"include").install Dir["libseq/*.h"]
     include.install_symlink Dir[libexec/"include/*"]
     # Install docs and examples
