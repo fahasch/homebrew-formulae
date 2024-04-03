@@ -22,9 +22,9 @@ class PythonKwant < Formula
   end
 
   def install
-    ENV.prepend_path "PATH", Formula["libcython"].opt_libexec/"bin"
+    ENV.prepend_path "PATH", Formula["cython"].opt_libexec/"bin"
     site_packages=Language::Python.site_packages(python3)
-    ENV.prepend_path "PYTHONPATH", Formula["libcython"].opt_libexec/site_packages
+    ENV.prepend_path "PYTHONPATH", Formula["cython"].opt_libexec/site_packages
 
     (buildpath/"build.conf").write <<~"EOS"
       [kwant.linalg.lapack]

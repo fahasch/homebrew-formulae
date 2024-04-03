@@ -14,9 +14,9 @@ class PythonTinyarray < Formula
   end
 
   def install
-    ENV.prepend_path "PATH", Formula["libcython"].opt_libexec/"bin"
+    ENV.prepend_path "PATH", Formula["cython"].opt_libexec/"bin"
     site_packages=Language::Python.site_packages(python3)
-    ENV.prepend_path "PYTHONPATH", Formula["libcython"].opt_libexec/site_packages
+    ENV.prepend_path "PYTHONPATH", Formula["cython"].opt_libexec/site_packages
 
     system python3, "-m", "pip", "install", *std_pip_args, "."
   end
