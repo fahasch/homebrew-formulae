@@ -6,7 +6,7 @@ class PythonKwant < Formula
   license "BSD-2-Clause"
 
   depends_on "gcc" => :build # for gfortran
-  depends_on "libcython" => :build
+  depends_on "cython" => :build
   depends_on "python-setuptools" => :build
   depends_on "metis"
   depends_on "mumps"

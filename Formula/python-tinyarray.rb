@@ -6,7 +6,7 @@ class PythonTinyarray < Formula
   license "BSD-2-Clause"
 
   depends_on "gcc" => :build # for gfortran
-  depends_on "libcython" => :build
+  depends_on "cython" => :build
   depends_on "python@3.12"
 
   def python3

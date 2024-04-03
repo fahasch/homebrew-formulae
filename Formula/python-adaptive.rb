@@ -5,7 +5,7 @@ class PythonAdaptive < Formula
   sha256 "ecd3428fd8a48b61fc5f0a413ede03e27db3a1dd53fcd49e24a36d11a8a29aba"
   license "BSD-2-Clause"
 
-  depends_on "libcython" => :build
+  depends_on "cython" => :build
   depends_on "python@3.12"
 
   def python3
