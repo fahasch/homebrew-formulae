@@ -5,8 +5,8 @@ class PythonKwant < Formula
   sha256 "3219d2512fcee55fa225328360574897e9f6049cfbae921bda0640a3a79dbd9f"
   license "BSD-2-Clause"
 
-  depends_on "gcc" => :build # for gfortran
   depends_on "cython" => :build
+  depends_on "gcc" => :build # for gfortran
   depends_on "python-setuptools" => :build
   depends_on "metis"
   depends_on "mumps"
