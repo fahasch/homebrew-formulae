@@ -8,3 +8,4 @@ So far the formulae included are:
 - mumps
 - fricas
 - kwant
+- tinyarray
