@@ -1,8 +1,8 @@
 class Mumps < Formula
   desc "MUltifrontal Massively Parallel sparse direct Solver"
   homepage "https://mumps-solver.org/"
-  url "https://mumps-solver.org/MUMPS_5.6.2.tar.gz"
-  sha256 "13a2c1aff2bd1aa92fe84b7b35d88f43434019963ca09ef7e8c90821a8f1d59a"
+  url "https://mumps-solver.org/MUMPS_5.7.0.tar.gz"
+  sha256 "0ea2681a56246cb8eec578324cefa09f2142ea6f7c500a5fd6e0ad226a1a06cf"
   license "CECILL-C"
 
   # Core dependencies
@@ -15,8 +15,8 @@ class Mumps < Formula
     cp "Make.inc/" + makefile, "Makefile.inc"
     inreplace "Makefile.inc", "-soname", "-install_name" unless OS.linux?
     inreplace "Makefile.inc", ".so", ".dylib" unless OS.linux?
-    inreplace "Makefile.inc", "# RPATH_OPT = -Wl,-rpath,/path/to/MUMPS_x.y.z/lib/", "RPATH_OPT = -Wl,-rpath,#{lib}"
-    make_args = ["CDEFS=-DAdd_", "OPTF=-fallow-argument-mismatch"]
+    make_args = [ "RPATH_OPT=-Wl,-rpath,#{lib}" ]
+    make_args += ["CDEFS=-DAdd_", "OPTF=-fallow-argument-mismatch", "SHARED_OPT=-dynamiclib"]
     make_args += ["CC=#{ENV.cc} -fPIC",
                   "FC=gfortran -fPIC -fopenmp",
                   "FL=gfortran -fPIC -fopenmp"]
