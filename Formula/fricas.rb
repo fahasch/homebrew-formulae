@@ -1,8 +1,8 @@
 class Fricas < Formula
   desc "Advanced computer algebra system"
   homepage "https://fricas.github.io"
-  url "https://github.com/fricas/fricas/archive/refs/tags/1.3.10.tar.gz"
-  sha256 "2c1a2daaf5ce7be86118bbd1bdc2d3bd052b3e1f0ce9257dbda82cd69d25c193"
+  url "https://github.com/fricas/fricas/archive/refs/tags/1.3.11.tar.gz"
+  sha256 "ce74ad30b2b25433ec0307f48a0cf36e894efdf9c030b7ef7665511f5e6bf7d9"
   license "BSD-3-Clause"
   head "https://github.com/fricas/fricas.git", branch: "master"
 
