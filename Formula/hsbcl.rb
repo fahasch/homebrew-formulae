@@ -1,6 +1,6 @@
 class Hsbcl < Formula
   desc "Hunchentoot Steel Bank Common Lisp system"
-  homepage "http://www.sbcl.org/"
+  homepage "https://edicl.github.io/hunchentoot/"
   url "https://github.com/edicl/hunchentoot/archive/refs/tags/v1.3.1.tar.gz"
   sha256 "92243ca8cb369f0fae0fdd84dcef8329caa01cc4778e8f85942757bd1ef39460"
   license all_of: [:public_domain, "MIT", "Xerox", "BSD-3-Clause"]
@@ -83,24 +83,25 @@ class Hsbcl < Formula
   end
 
   def install
-    dependencies = %w[alexandria
-                      bordeaux-threads
-                      chunga
-                      cl-base64
-                      cl-fad
-                      cl-ppcre
-                      flexi-streams
-                      global-vars
+    dependencies = %w[split-sequence
+                      usocket
+                      trivial-backtrace
                       md5
                       rfc2388
-                      split-sequence
-                      trivial-backtrace
-                      trivial-features
-                      trivial-garbage
                       trivial-gray-streams
-                      usocket ]
+                      flexi-streams
+                      cl-ppcre
+                      trivial-garbage
+                      trivial-features
+                      global-vars
+                      alexandria
+                      bordeaux-threads
+                      cl-fad
+                      cl-base64
+                      chunga ]
 
     dependencies.each { |d| resource(d).stage buildpath/d }
+    do_asd = dependencies.map { |d| "(do_asd \"#{d}/\" \"#{d}\")" }.join("\n")
 
     (buildpath/"la.lisp").write <<~EOS
       (require "asdf")
@@ -111,22 +112,7 @@ class Hsbcl < Formula
           (asdf:load-system n))
       )
 
-      (do_asd "split-sequence/" "split-sequence")
-      (do_asd "usocket/" "usocket")
-      (do_asd "trivial-backtrace/" "trivial-backtrace")
-      (do_asd "md5/" "md5")
-      (do_asd "rfc2388/" "rfc2388")
-      (do_asd "trivial-gray-streams/" "trivial-gray-streams")
-      (do_asd "flexi-streams/" "flexi-streams")
-      (do_asd "cl-ppcre/" "cl-ppcre")
-      (do_asd "trivial-garbage/" "trivial-garbage")
-      (do_asd "trivial-features/" "trivial-features")
-      (do_asd "global-vars/" "global-vars")
-      (do_asd "alexandria/" "alexandria")
-      (do_asd "bordeaux-threads/" "bordeaux-threads")
-      (do_asd "cl-fad/" "cl-fad")
-      (do_asd "cl-base64/" "cl-base64")
-      (do_asd "chunga/" "chunga")
+      #{do_asd}
       (push :HUNCHENTOOT-NO-SSL *FEATURES*)
       (do_asd "" "hunchentoot")
       (require "SB-POSIX")
