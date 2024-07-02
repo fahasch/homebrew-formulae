@@ -15,8 +15,10 @@ class Mumps < Formula
     cp "Make.inc/" + makefile, "Makefile.inc"
     inreplace "Makefile.inc", "-soname", "-install_name" unless OS.linux?
     inreplace "Makefile.inc", ".so", ".dylib" unless OS.linux?
-    make_args = [ "RPATH_OPT=-Wl,-rpath,#{lib}" ]
-    make_args += ["CDEFS=-DAdd_", "OPTF=-fallow-argument-mismatch", "SHARED_OPT=-dynamiclib"]
+    make_args = ["RPATH_OPT=-Wl,-rpath,#{lib}"]
+    make_args += ["CDEFS=-DAdd_",
+                  "OPTF=-fallow-argument-mismatch",
+                  "SHARED_OPT=-dynamiclib"]
     make_args += ["CC=#{ENV.cc} -fPIC",
                   "FC=gfortran -fPIC -fopenmp",
                   "FL=gfortran -fPIC -fopenmp"]
