@@ -22,9 +22,7 @@ class PythonKwant < Formula
   end
 
   def install
-    ENV.prepend_path "PATH", Formula["cython"].opt_libexec/"bin"
-    site_packages=Language::Python.site_packages(python3)
-    ENV.prepend_path "PYTHONPATH", Formula["cython"].opt_libexec/site_packages
+    ENV.prepend_path "PYTHONPATH", Formula["cython"].opt_libexec/Language::Python.site_packages(python3) 
 
     (buildpath/"build.conf").write <<~"EOS"
       [kwant.linalg.lapack]
@@ -35,6 +33,8 @@ class PythonKwant < Formula
       library_dirs = #{Formula["gcc"].lib}/gcc/current
     EOS
 
+    # delete cython files
+    Dir.glob('kwant/**/*.c').each { |file| File.delete(file)}
     system python3, "setup.py", "build", "--cython" # recythonize
     system python3, "-m", "pip", "install", *std_pip_args, "."
   end
