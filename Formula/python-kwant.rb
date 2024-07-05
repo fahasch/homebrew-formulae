@@ -7,7 +7,6 @@ class PythonKwant < Formula
 
   depends_on "cython" => :build
   depends_on "gcc" => :build # for gfortran
-  depends_on "python-setuptools" => :build
   depends_on "metis"
   depends_on "mumps"
   depends_on "numpy"
@@ -18,18 +17,17 @@ class PythonKwant < Formula
   depends_on "scotch"
 
   def python3
-    which("python3.12")
+    "python3.12"
   end
 
   def install
-    ENV.prepend_path "PYTHONPATH",
-      Formula["cython"].opt_libexec/Language::Python.site_packages(python3)
+    ENV.prepend_path "PYTHONPATH", Formula["cython"].opt_libexec/Language::Python.site_packages(python3)
 
     (buildpath/"build.conf").write <<~"EOS"
       [kwant.linalg.lapack]
-      extra_link_args = -Wl,-framework -Wl,Accelerate
+      extra_link_args = -lopenblas
 
-      [mumps]
+      [kwant.linalg._mumps]
       libraries = zmumps mumps_common pord metis esmumps scotch scotcherr mpiseq gfortran gomp
       library_dirs = #{Formula["gcc"].lib}/gcc/current
     EOS
@@ -37,7 +35,8 @@ class PythonKwant < Formula
     # delete cython files
     Dir.glob("kwant/**/*.c").each { |file| File.delete(file) }
     system python3, "setup.py", "build", "--cython" # recythonize
-    system python3, "-m", "pip", "install", *std_pip_args, "."
+
+    system python3, "-m", "pip", "install", *std_pip_args(build_isolation: true), "."
   end
 
   test do
