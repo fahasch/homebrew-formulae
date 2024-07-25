@@ -11,6 +11,7 @@ class PythonKwant < Formula
   depends_on "mumps"
   depends_on "numpy"
   depends_on "openblas"
+  depends_on "python-setuptools" => :build
   depends_on "python-tinyarray"
   depends_on "python@3.12"
   depends_on "scipy"
