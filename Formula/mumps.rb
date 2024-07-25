@@ -7,29 +7,18 @@ class Mumps < Formula
 
   # Core dependencies
   depends_on "gcc"
+  depends_on "metis"
   depends_on "openblas"
+  depends_on "scotch"
   fails_with :clang
 
   def install
-    makefile = "Makefile.G95.SEQ"
+    makefile = "Makefile.debian.SEQ"
     cp "Make.inc/" + makefile, "Makefile.inc"
     inreplace "Makefile.inc", "-soname", "-install_name" unless OS.linux?
     inreplace "Makefile.inc", ".so", ".dylib" unless OS.linux?
-    make_args = ["RPATH_OPT=-Wl,-rpath,#{lib}"]
-    make_args += ["CDEFS=-DAdd_",
-                  "OPTF=-fallow-argument-mismatch",
-                  "SHARED_OPT=-dynamiclib"]
-    make_args += ["CC=#{ENV.cc} -fPIC",
-                  "FC=gfortran -fPIC -fopenmp",
-                  "FL=gfortran -fPIC -fopenmp"]
-    # Default lib args
-    # Note: MUMPS link cannot find LAPACK without these
-    # lines
-    blas_lib = "-L#{Formula["openblas"].opt_lib} -lopenblas"
-    make_args << "LIBBLAS=#{blas_lib}"
-    make_args << "LAPACK=#{blas_lib}"
-
-    ENV.deparallelize
+    make_args = ["RPATH_OPT=-Wl,-rpath,#{lib}",
+                 "ISCOTCH=-I#{Formula["scotch"].opt_include}"]
     system "make", "allshared", *make_args
 
     # Makefile provides no install target, perform as needed install

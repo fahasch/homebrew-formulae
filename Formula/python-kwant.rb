@@ -6,16 +6,12 @@ class PythonKwant < Formula
   license "BSD-2-Clause"
 
   depends_on "cython" => :build
-  depends_on "gcc" => :build # for gfortran
-  depends_on "metis"
-  depends_on "mumps"
-  depends_on "numpy"
-  depends_on "openblas"
   depends_on "python-setuptools" => :build
+  depends_on "mumps"
+  depends_on "openblas"
   depends_on "python-tinyarray"
   depends_on "python@3.12"
   depends_on "scipy"
-  depends_on "scotch"
 
   def python3
     "python3.12"
@@ -24,19 +20,15 @@ class PythonKwant < Formula
   def install
     ENV.prepend_path "PYTHONPATH", Formula["cython"].opt_libexec/Language::Python.site_packages(python3)
 
-    (buildpath/"build.conf").write <<~"EOS"
+    (buildpath/"build.conf").write <<~EOS
       [kwant.linalg.lapack]
       extra_link_args = -lopenblas
 
       [kwant.linalg._mumps]
-      libraries = zmumps mumps_common pord metis esmumps scotch scotcherr mpiseq gfortran gomp
-      library_dirs = #{Formula["gcc"].lib}/gcc/current
+      libraries = zmumps
     EOS
 
-    # delete cython files
-    Dir.glob("kwant/**/*.c").each { |file| File.delete(file) }
     system python3, "setup.py", "build", "--cython" # recythonize
-
     system python3, "-m", "pip", "install", *std_pip_args(build_isolation: true), "."
   end
 
