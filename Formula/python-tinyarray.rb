@@ -6,10 +6,10 @@ class PythonTinyarray < Formula
   license "BSD-2-Clause"
 
   depends_on "python-setuptools" => :build
-  depends_on "python@3.12"
+  depends_on "python@3"
 
   def python3
-    "python3.12"
+    "python3"
   end
 
   def install

@@ -10,11 +10,11 @@ class PythonKwant < Formula
   depends_on "mumps"
   depends_on "openblas"
   depends_on "python-tinyarray"
-  depends_on "python@3.12"
+  depends_on "python@3"
   depends_on "scipy"
 
   def python3
-    "python3.12"
+    "python3"
   end
 
   def install
