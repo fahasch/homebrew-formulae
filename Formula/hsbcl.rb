@@ -13,13 +13,13 @@ class Hsbcl < Formula
   end
 
   resource "bordeaux-threads" do
-    url "https://github.com/sionescu/bordeaux-threads/archive/refs/tags/v0.9.3.tar.gz"
-    sha256 "caa34284b6d5224c8907d256601a6f6341923842989fb3be58b3379b2674b229"
+    url "https://github.com/sionescu/bordeaux-threads/archive/refs/tags/v0.9.4.tar.gz"
+    sha256 "88a8d2130e31644f606e905abddc481b35954f9bad231a53b0f4cf2181c46d98"
   end
 
   resource "chunga" do
-    url "https://github.com/edicl/chunga/archive/refs/tags/v1.1.8.tar.gz"
-    sha256 "9508090b1dfac6dec4e6a8eb9673d13539c9b468868cba46a3f7c213fd992786"
+    url "https://github.com/edicl/chunga/archive/refs/tags/v1.1.9.tar.gz"
+    sha256 "7b5c7e3a7d99b936281aac7322a3f6087ccf656de0ce7e4a11340e0e2da1b2f3"
   end
 
   resource "cl-base64" do
@@ -78,8 +78,8 @@ class Hsbcl < Formula
   end
 
   resource "usocket" do
-    url "https://github.com/usocket/usocket/archive/refs/tags/v0.8.7.tar.gz"
-    sha256 "cc7d412f122a9ae31ee94b919d459ddebbb2952c8b7c864e772d8e271f7952a5"
+    url "https://github.com/usocket/usocket/archive/refs/tags/v0.8.8.tar.gz"
+    sha256 "da19f4da89db83caf2631c08229e747b81518f177c50a46672f48a07b17f346d"
   end
 
   def install
