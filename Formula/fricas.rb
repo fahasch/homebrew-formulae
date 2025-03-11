@@ -6,8 +6,8 @@ class Fricas < Formula
   license "BSD-3-Clause"
   head "https://github.com/fricas/fricas.git", branch: "master"
 
-  depends_on "gmp" => :build
-  depends_on "hsbcl" => :build
+  depends_on "gmp"
+  depends_on "hsbcl"
   depends_on "libice"
   depends_on "libsm"
   depends_on "libx11"
@@ -23,7 +23,6 @@ class Fricas < Formula
     ]
 
     mkdir "build" do
-      ENV.deparallelize
       system "../configure", *std_configure_args, *args
       system "make"
       system "make", "install"
