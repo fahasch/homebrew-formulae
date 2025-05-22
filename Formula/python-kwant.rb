@@ -2,6 +2,7 @@ class PythonKwant < Formula
   desc "Python library for tight binding calculations"
   homepage "https://kwant-project.org"
   url "https://downloads.kwant-project.org/kwant/kwant-1.5.0.tar.gz"
+  head "https://gitlab.kwant-project.org/kwant/kwant.git", branch: "main"
   sha256 "9859451d0e20364ce30777a5dd7ecb7a06956822612935a408ed4d81e5c8321b"
   license "BSD-2-Clause"
 
