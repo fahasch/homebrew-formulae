@@ -8,7 +8,7 @@ class Hsbcl < Formula
   depends_on "sbcl" => :build
 
   resource "alexandria" do
-    url "https://gitlab.common-lisp.net/alexandria/alexandria/-/archive/v1.4/alexandria-v1.4.tar.gz"
+    url "https://github.com/kmx-io/alexandria.git"
     sha256 "8f6fe04e314660086ea11685d8a6a3fc648c5643305002adf4e5c45460b8533e"
   end
 
