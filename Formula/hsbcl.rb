@@ -9,7 +9,7 @@ class Hsbcl < Formula
 
   resource "alexandria" do
     url "https://gitlab.common-lisp.net/alexandria/alexandria/-/archive/v1.4/alexandria-v1.4.tar.gz"
-    sha256 "0512aec38d054a20daa66e9983cf8a98151582d7e2307e49e8c1b4a61bbb779a"
+    sha256 "8f6fe04e314660086ea11685d8a6a3fc648c5643305002adf4e5c45460b8533e"
   end
 
   resource "bordeaux-threads" do
