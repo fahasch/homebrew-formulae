@@ -78,8 +78,8 @@ class Hsbcl < Formula
   end
 
   resource "usocket" do
-    url "https://github.com/usocket/usocket/archive/refs/tags/v0.8.8.tar.gz"
-    sha256 "da19f4da89db83caf2631c08229e747b81518f177c50a46672f48a07b17f346d"
+    url "https://github.com/usocket/usocket/archive/refs/tags/v0.8.9.tar.gz"
+    sha256 "36759258e392359aa88fb026009949dadd2d46b108492dece1b90d937cf873e7"
   end
 
   def install

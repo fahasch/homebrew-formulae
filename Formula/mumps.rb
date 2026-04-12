@@ -1,8 +1,8 @@
 class Mumps < Formula
   desc "MUltifrontal Massively Parallel sparse direct Solver"
   homepage "https://mumps-solver.org/"
-  url "https://mumps-solver.org/MUMPS_5.7.3.tar.gz"
-  sha256 "84a47f7c4231b9efdf4d4f631a2cae2bdd9adeaabc088261d15af040143ed112"
+  url "https://mumps-solver.org/MUMPS_5.8.2.tar.gz"
+  sha256 "eb515aa688e6dbab414bb6e889ff4c8b23f1691a843c68da5230a33ac4db7039"
   license "CECILL-C"
 
   # Core dependencies
