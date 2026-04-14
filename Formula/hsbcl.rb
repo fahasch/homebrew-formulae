@@ -83,8 +83,6 @@ class Hsbcl < Formula
   end
 
   def install
-    (libexec/"hunchentoot").install Dir["*"]
-
     dependencies = %w[split-sequence
                       usocket
                       trivial-backtrace
@@ -102,36 +100,25 @@ class Hsbcl < Formula
                       cl-base64
                       chunga ]
 
-    dependencies.each { |d| resource(d).stage(libexec/d) }
+    dependencies.each { |d| resource(d).stage buildpath/d }
 
-      (libexec/"init.lisp").write <<~LISP
+    ENV["CL_SOURCE_REGISTRY"] = "#{buildpath}//"
+
+    (buildpath/"init.lisp").write <<~LISP
       (require "asdf")
       (setf asdf:*central-registry* nil)
       (pushnew :hunchentoot-no-ssl *features*)
-      (handler-bind ((warning #'muffle-warning))
-      (asdf:load-system :hunchentoot))
+      (asdf:load-system :hunchentoot)
       (require "sb-posix")
       (require "sb-sprof")
+      (sb-ext::save-lisp-and-die "./hsbcl" :executable t)
     LISP
 
-    (bin/"hsbcl").write <<~SH
-      #!/bin/sh
-      export CL_SOURCE_REGISTRY="#{libexec}//"
-      RUNTIME_OPTS=""
-      while [ $# -gt 0 ]; do
-        case "$1" in
-          --dynamic-space-size|--control-stack-size|--core|--noinform)
-            RUNTIME_OPTS="$RUNTIME_OPTS $1 $2"
-            shift 2
-            ;;
-          *)
-            break
-            ;;
-        esac
-      done
-      exec sbcl $RUNTIME_OPTS --load "#{libexec}/init.lisp" "$@"
-    SH
+    system "sbcl --eval '(load \"init.lisp\")' --quit"
+    bin.install("hsbcl")
+
   end
+
 
   test do
     output = shell_output("#{bin}/hsbcl --noinform --disable-debugger \
