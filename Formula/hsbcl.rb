@@ -83,6 +83,8 @@ class Hsbcl < Formula
   end
 
   def install
+    (libexec/"hunchentoot").install Dir["*"]
+
     dependencies = %w[split-sequence
                       usocket
                       trivial-backtrace
@@ -100,28 +102,48 @@ class Hsbcl < Formula
                       cl-base64
                       chunga ]
 
-    dependencies.each { |d| resource(d).stage buildpath/d }
+    dependencies.each { |d| resource(d).stage(libexec/d) }
 
-    ENV["CL_SOURCE_REGISTRY"] = "#{buildpath}//"
+    dependencies.append("hunchentoot")
+    asd_path = dependencies.map do |d|
+      "(push #P\"#{libexec}/#{d}/\" asdf:*central-registry*)"
+    end.join("\n")
 
-    (buildpath/"init.lisp").write <<~LISP
+    (libexec/"init.lisp").write <<~LISP
       (require "asdf")
       (setf asdf:*central-registry* nil)
+      #{asd_path}
       (pushnew :hunchentoot-no-ssl *features*)
-      (asdf:load-system :hunchentoot)
+      (let ((*error-output* (make-broadcast-stream))(*compile-verbose* nil))
+      (asdf:load-system :hunchentoot))
       (require "sb-posix")
       (require "sb-sprof")
-      (sb-ext::save-lisp-and-die "./hsbcl" :executable t)
     LISP
 
-    system "sbcl --eval '(load \"init.lisp\")' --quit"
-    bin.install("hsbcl")
-
+    (bin/"hsbcl").write <<~SH
+      #!/bin/sh
+      RUNTIME_OPTS=()
+      while [ $# -gt 0 ]; do
+        case "$1" in
+          --dynamic-space-size|--control-stack-size|--core|--tls-limit)
+            RUNTIME_OPTS+=("$1" "$2")
+            shift 2
+            ;;
+          --help|--version|--noinform)
+            RUNTIME_OPTS+=("$1")
+            shift 1
+            ;;
+          *)
+            break
+            ;;
+        esac
+      done
+      exec sbcl "${RUNTIME_OPTS[@]}" --load "#{libexec}/init.lisp" "$@"
+    SH
   end
 
-
   test do
-    output = shell_output("#{bin}/hsbcl --noinform --disable-debugger \
+    output = shell_output("#{bin}/hsbcl --noinform \
                           --eval '(print (find-package :hunchentoot))' --quit")
     assert_equal "#<PACKAGE \"HUNCHENTOOT\">", output.strip
   end

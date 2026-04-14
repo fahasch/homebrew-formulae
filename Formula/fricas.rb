@@ -6,7 +6,6 @@ class Fricas < Formula
   license "BSD-3-Clause"
   head "https://github.com/fricas/fricas.git", branch: "master"
 
-  depends_on "sbcl"
   depends_on "gmp"
   depends_on "hsbcl"
   depends_on "libice"
@@ -16,12 +15,12 @@ class Fricas < Formula
   depends_on "libxdmcp"
   depends_on "libxpm"
   depends_on "libxt"
-  depends_on "sbcl"
   depends_on "zstd"
 
   def install
     args = [
       "--with-lisp=#{Formula["hsbcl"].bin}/hsbcl",
+      "--enable-lisp-core",
       "--enable-gmp",
     ]
 
@@ -34,6 +33,7 @@ class Fricas < Formula
 
   test do
     assert_match %r{ \(/ \(pi\) 2\)\n},
-      pipe_output("#{bin}/fricas -nosman",  "integrate(sqrt(1-x^2),x=-1..1)::InputForm")
+      pipe_output("#{bin}/fricas -nosman",
+                  "integrate(sqrt(1-x^2),x=-1..1)::InputForm")
   end
 end
