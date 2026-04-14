@@ -83,6 +83,8 @@ class Hsbcl < Formula
   end
 
   def install
+    (libexec/"hunchentoot").install Dir["*"]
+
     dependencies = %w[split-sequence
                       usocket
                       trivial-backtrace
@@ -100,35 +102,40 @@ class Hsbcl < Formula
                       cl-base64
                       chunga ]
 
-    dependencies.each { |d| resource(d).stage buildpath/d }
-    do_asd = dependencies.map { |d| "(do_asd \"#{d}/\" \"#{d}\")" }.join("\n")
+    dependencies.each { |d| resource(d).stage(libexec/d) }
 
-    (buildpath/"la.lisp").write <<~EOS
+      (libexec/"init.lisp").write <<~LISP
       (require "asdf")
-      (setf |$base_dir| "#{buildpath}/")
-      (defun do_asd (dir n)
-          (let ((asdf:*central-registry*
-                 (list (concatenate 'string |$base_dir| dir))))
-          (asdf:load-system n))
-      )
+      (setf asdf:*central-registry* nil)
+      (pushnew :hunchentoot-no-ssl *features*)
+      (handler-bind ((warning #'muffle-warning))
+      (asdf:load-system :hunchentoot))
+      (require "sb-posix")
+      (require "sb-sprof")
+    LISP
 
-      #{do_asd}
-      (push :HUNCHENTOOT-NO-SSL *FEATURES*)
-      (do_asd "" "hunchentoot")
-      (require "SB-POSIX")
-      (require "SB-SPROF")
-      (sb-ext::save-lisp-and-die "./hsbcl" :executable t)
-    EOS
-
-    system "sbcl --eval '(load \"la.lisp\")' --quit"
-    bin.install("hsbcl")
+    (bin/"hsbcl").write <<~SH
+      #!/bin/sh
+      export CL_SOURCE_REGISTRY="#{libexec}//"
+      RUNTIME_OPTS=""
+      while [ $# -gt 0 ]; do
+        case "$1" in
+          --dynamic-space-size|--control-stack-size|--core|--noinform)
+            RUNTIME_OPTS="$RUNTIME_OPTS $1 $2"
+            shift 2
+            ;;
+          *)
+            break
+            ;;
+        esac
+      done
+      exec sbcl $RUNTIME_OPTS --load "#{libexec}/init.lisp" "$@"
+    SH
   end
 
   test do
-    (testpath/"simple.sbcl").write <<~EOS
-      (write-line (write-to-string (+ 2 2)))
-    EOS
-    output = shell_output("#{bin}/hsbcl --script #{testpath}/simple.sbcl")
-    assert_equal "4", output.strip
+    output = shell_output("#{bin}/hsbcl --noinform --disable-debugger \
+                          --eval '(print (find-package :hunchentoot))' --quit")
+    assert_equal "#<PACKAGE \"HUNCHENTOOT\">", output.strip
   end
 end

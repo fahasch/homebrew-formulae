@@ -19,7 +19,8 @@ class Fricas < Formula
 
   def install
     args = [
-      "--with-lisp=#{Formula["hsbcl"].bin}/hsbcl --dynamic-space-size 4096",
+      "--with-lisp=#{Formula["hsbcl"].bin}/hsbcl",
+      "--enable-lisp-core",
       "--enable-gmp",
     ]
 
