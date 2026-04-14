@@ -15,6 +15,7 @@ class Fricas < Formula
   depends_on "libxdmcp"
   depends_on "libxpm"
   depends_on "libxt"
+  depends_on "sbcl"
   depends_on "zstd"
 
   def install
