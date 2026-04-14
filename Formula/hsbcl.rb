@@ -5,7 +5,7 @@ class Hsbcl < Formula
   sha256 "92243ca8cb369f0fae0fdd84dcef8329caa01cc4778e8f85942757bd1ef39460"
   license all_of: [:public_domain, "MIT", "Xerox", "BSD-3-Clause"]
 
-  depends_on "sbcl" => :build
+  depends_on "sbcl"
 
   resource "alexandria" do
     url "https://github.com/kmx-io/alexandria.git"
