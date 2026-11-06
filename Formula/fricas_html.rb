@@ -10,9 +10,9 @@
 class FricasHtml < Formula
   desc "Advanced computer algebra system (HyperDoc in the web browser)"
   homepage "https://fricas.github.io"
-  url "https://github.com/fahasch/fricas/releases/download/browser-hyperdoc-2-actions/fricas-html-0becf7d.tar.bz2"
-  version "2026.11.05-0becf7d"
-  sha256 "f038d9f4ae59eed687427d35022ad18ad24a859d04dc2633ebe316399fb25733"
+  url "https://github.com/fahasch/fricas/releases/download/browser-hyperdoc-2-actions/fricas-html-ba33b04.tar.bz2"
+  version "2026.11.05-ba33b04"
+  sha256 "83c91559408ce85d929acac844f28d05b3948b54354194d975300e8de9b6e671"
   license "BSD-3-Clause"
 
   depends_on "gmp"
